@@ -48,11 +48,15 @@ def get_tensor(fp_16=False, channel_last=False, batch_size=8):
 
 @torch.no_grad()
 def infer(model, tensor):
-    return torch.softmax(model(tensor), dim=1)
+    ans = torch.softmax(model(tensor), dim=1)
+    torch.cuda.synchronize()
+    return ans
 
 @torch.inference_mode()
 def infer_o(model, tensor):
-    return torch.softmax(model(tensor), dim=1)
+    ans = torch.softmax(model(tensor), dim=1)
+    torch.cuda.synchronize()
+    return ans
 
 def warmup(model, tensor, times=3):
     for i in range(times):
