@@ -9,7 +9,7 @@
 # GPU: NVIDIA GeForce RTX 3070 
 pytest benchmark.py --benchmark-compare
 ```
-![Benchmark Results](https://github.com/viig99/Pytorch_Inference_Benchmarker/blob/main/image/infer.png?raw=true)
+![Benchmark Results](image/infer.png?raw=true)
 
 ## Dependencies
 * [TensorRT Installation Guide](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html)
