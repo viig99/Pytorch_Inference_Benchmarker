@@ -13,6 +13,7 @@ pytest -W ignore benchmark.py --benchmark-compare
 
 ## Dependencies
 * Pytorch, Torchvision, Onnxruntime-gpu, Apacahe TVM
+* Check `sh scripts/tvm_tuner.sh` to create optimized tvm models.
 * [TensorRT Installation Guide](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html)
 * Add TensorRT path to LD_LIBRARY_PATH, LD_LIBRARY_PATH, LD_LIBRARY_PATH
 * Link nvinfer `sudo ln -s /media/sdd_1tb/Software_Downloads/TensorRT-8.2.3.0/lib/libnvinfer.so /usr/lib/libnvinfer.so`
