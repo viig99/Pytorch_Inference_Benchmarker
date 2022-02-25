@@ -5,6 +5,7 @@ from PIL import Image
 from torch2trt import torch2trt
 import os
 import onnxruntime as ort
+from scipy.special import softmax
 
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
@@ -38,7 +39,7 @@ def load_onnx_model():
 
     if not os.path.exists("models/resnet_18.onnx"):
         os.makedirs("models", exist_ok=True)
-        model = models.resnet18(pretrained=True).cuda().half()
+        model = load_model(fp_16=True, scripted=True, frozen=False, optimized=True, channel_last=False)
         torch.onnx.export(model,                                # model being run
                     torch.randn(8, 3, 224, 224).cuda().half(),    # model input (or a tuple for multiple inputs)
                     "models/resnet_18.onnx",
@@ -92,8 +93,7 @@ def infer_o(model, tensor):
     return ans
 
 def infer_onnx(ort_session, tensor):
-    # return torch.softmax(torch.from_numpy(ort_session.run(None, ort_inputs)[0]).cuda(), dim=1)
-    return ort_session.run(None, {'input': tensor})[0]
+    return softmax(ort_session.run(None, {'input': tensor})[0], axis=1)
 
 def warmup(model, tensor, times=3):
     for i in range(times):
