@@ -7,7 +7,7 @@
 # Kernel: 5.15.17-xanmod2 
 # CPU: AMD Ryzen 9 5900X (24) @ 3.700GHz 
 # GPU: NVIDIA GeForce RTX 3070 
-pytest benchmark.py --benchmark-compare
+pytest -W ignore benchmark.py --benchmark-compare
 ```
 ![Benchmark Results](image/infer.png?raw=true)
 
