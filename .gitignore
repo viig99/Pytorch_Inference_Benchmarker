@@ -154,3 +154,6 @@ cython_debug/
 .benchmarks/
 .pytest_cache/
 __pycache__/
+
+models/
+debug/

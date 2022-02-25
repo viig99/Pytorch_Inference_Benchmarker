@@ -1,7 +1,7 @@
 import warnings
 warnings.filterwarnings("ignore")
 import pytest
-from utils import load_model, get_tensor, infer, warmup, infer_o, load_trt_model
+from utils import *
 
 @pytest.mark.benchmark(
     group="cuda_inference",
@@ -98,3 +98,18 @@ def test_fp16_trt(benchmark):
     tensor = get_tensor(fp_16=True)
     warmup(model, tensor)
     benchmark(infer_o, model, tensor)
+
+@pytest.mark.benchmark(
+    group="cuda_inference",
+    min_rounds=3,
+    disable_gc=True,
+    warmup=False
+)
+def test_fp16_onnx(benchmark):
+    ort_session = load_onnx_model()
+    tensor = get_tensor(fp_16=True)
+    numpy_tensor = to_numpy(tensor)
+    infer_onnx(ort_session, numpy_tensor)
+    infer_onnx(ort_session, numpy_tensor)
+    infer_onnx(ort_session, numpy_tensor)
+    benchmark(infer_onnx, ort_session, numpy_tensor)
